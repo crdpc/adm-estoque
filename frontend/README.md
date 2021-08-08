@@ -21,3 +21,5 @@ Gerenciar as rotas
 
 Transforma o CSS em componentes
 ### npm install --save styled-components
+
+### Commit das páginas
