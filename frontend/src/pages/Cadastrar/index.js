@@ -13,7 +13,7 @@ export const Cadastrar = () => {
 
     const addProduto = async e => {
         e.preventDefault();
-        console.log("Valor: " + produto.valor);
+        console.log("Quantidade: " + produto.quantidade);
     }
 
     return(
