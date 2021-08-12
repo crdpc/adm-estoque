@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu } from '../../components/Menu';
 
 export const Listar = () => {
 
+    const { state } = useLocation();
+
     const [data, setData] = useState([]);
+
+    const [status, setStatus] = useState({
+        type: state? state.type : "",
+        mensagem: state? state.mensagem : ""
+    });
 
     const listarProdutos = async  => {
         var valores = [
@@ -43,6 +50,8 @@ export const Listar = () => {
         <>
         <Menu />
         <h1>Listar</h1>
+
+        {status.type === "success" ? <p style={{color: "green"}}>{status.mensagem}</p> : ""}
 
         <Link to="/cadastrar"><button type="button">Cadastrar</button></Link>
 
