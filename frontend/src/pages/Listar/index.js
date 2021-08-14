@@ -8,7 +8,7 @@ export const Listar = () => {
 
     const [data, setData] = useState([]);
 
-    const [status, setStatus] = useState({
+    const [status] = useState({
         type: state? state.type : "",
         mensagem: state? state.mensagem : ""
     });
