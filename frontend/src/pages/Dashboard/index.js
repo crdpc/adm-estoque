@@ -1,17 +1,17 @@
 import React from 'react';
 import { Menu } from '../../components/Menu';
-import { Container, ContudoTitulo, Titulo } from '../../styles/custom_adm';
+import { Container, ConteudoTitulo, Titulo } from '../../styles/custom_adm';
 
 export const Dashboard = () => {
 
-    return(
+    return (
 
-        <Container>       
-        
-        <Menu />
-        <ContudoTitulo>
-        <Titulo>Willcome - Dashboard</Titulo>
-        </ContudoTitulo>
+        <Container>
+
+            <Menu />
+            <ConteudoTitulo>
+                <Titulo>Willcome - Dashboard</Titulo>
+            </ConteudoTitulo>
         </Container>
 
     );
