@@ -3,14 +3,25 @@ const app = express();
 
 app.use(express.json());
 
-const db = require('./models/db');
+const Produto = require('./models/Produto');
 
 app.get("/", async (req, res) => {
     res.send('Hallo Welt. Nach');
 });
 
 app.post("/cad-produto", async (req, res) => {
-    console.log(req.body);
+    await Produto.create(req.body)
+    .then(() => {
+        return res.json({
+            erro: false,
+            mensagem: "Produto cadastrado com sucesso!"
+        });      
+    }).catch(()=> {
+        return res.status(400).json( {
+            erro: true,
+            mensagem: " Não foi possível cadastrar o produto!"
+        });  
+    });
     res.send('Cadastrar produto');
 });
 
