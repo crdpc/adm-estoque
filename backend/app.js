@@ -22,7 +22,7 @@ const Usuario = require('./models/Usuario');
 const Produto = require('./models/Produto');
 
 app.get('/usuario/:id', eAdmin, async (req, res) => {
-    await Usuarios.findByPk(req.params.id).
+    await Usuario.findByPk(req.params.id).
     then(usuario => {
         return res.json({
             erro: false,
@@ -36,10 +36,17 @@ app.get('/usuario/:id', eAdmin, async (req, res) => {
     });
 });
 
-app.get('/usuarios', eAdmin, function (req, res) {
-    return res.json({
-        erro: false,
-        messagem: "Listar usuários!"
+app.get('/usuarios', eAdmin, async function (req, res) {
+    await Usuario.findAll({ order: [['id', 'DESC']] }).then(function (usuarios) {
+        return res.json({
+            erro: false,
+            usuarios
+        });
+    }).catch(function () {
+        return res.json({
+            erro: true,
+            messagem: "Erro: Nenhum usuário encontrado!"
+        });
     });
 });
 
@@ -61,28 +68,65 @@ app.post('/usuario', async (req, res) => {
 
 });
 
-app.post('/login', function (req, res) {
-    //console.log(req.body.senha);
-    if (req.body.usuario === 'crdpc@yahoo.com.br' && req.body.senha === '123456') {
-        const { id } = 1;
-        var privateKey = process.env.SECRET;
-        var token = jwt.sign({ id }, privateKey, {
-            //expiresIn: 600 //10min
-            expiresIn: '7d' //7 dias
-        })
-
+app.put('/usuario/:id', eAdmin, async (req, res) => {
+    var dados = req.body;
+    dados.senha = await bcrypt.hash(dados.senha,8);
+    
+    await Usuario.update(dados, { where: {id: dados.id}}).
+    then(function(){
         return res.json({
             erro: false,
-            messagem: "Login válido!",
-            token
+            messagem: "Usuário alterado com sucesso!"
         });
-    }
-    return res.json({
-        erro: true,
-        messagem: "Erro: Login ou senha incorreto!"
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Não foi possível alterar o usuário!"
+        });
     });
 });
-    
+
+app.delete('/usuario/:id', eAdmin, async (req, res) => {
+    await Usuario.destroy({where: {id: req.params.id}}).
+    then(function(){
+        return res.json({
+            erro: false,
+            messagem: "Usuário apagado com sucesso!"
+        });
+    }).catch(function(){
+        return res.json({
+            erro: true,
+            messagem: "Erro: Não foi possível apagar usuário!"
+        });
+    });
+});
+
+app.post('/login', async (req, res) => {
+    const usuario = await Usuario.findOne({ where: { email: req.body.usuario } });
+    if (usuario === null) {
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário ou a senha incorreta!"
+        });
+    }
+
+    if (!(await bcrypt.compare(req.body.senha, usuario.senha))) {
+        return res.json({
+            erro: true,
+            messagem: "Erro: Usuário ou a senha incorreta!"
+        });
+    }
+    var token = jwt.sign({ id: usuario.id }, process.env.SECRET, {
+        //expiresIn: 600 //10min
+        expiresIn: '7d' //7 dias
+    })
+
+    return res.json({
+        erro: false,
+        messagem: "Login realizado com sucesso!",
+        token
+    });
+});    
 
 app.get("/", async (req, res) => {
     res.send('Hallo Welt. Nach');
