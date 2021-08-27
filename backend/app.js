@@ -17,7 +17,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 const Usuario = require('./models/Usuario');
 const Produto = require('./models/Produto');
 
@@ -185,17 +184,17 @@ app.post("/cad-produto", async (req, res) => {
 });
 
 app.put('/edit-produto', async (req, res) => {
-    const {id} = req.params;
+    const {id} = req.body;
     await Produto.update(req.body, {where: {id}})
     .then(() => {
         return res.json({
             erro: false,
-            mensagem: "Produto editado com sucesso"
+            mensagem: "Produto editado!"
         });
     }).catch(() => {
         return res.status(400).json({
             erro: true,
-            mensagem: " Não foi possível editar o produto!"
+            mensagem: "Não foi possível editar o produto!"
         });        
     });
 }); 
