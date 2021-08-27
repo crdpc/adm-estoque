@@ -6,12 +6,14 @@ import {Listar} from './pages/Listar';
 import {Visualizar} from './pages/Visualizar';
 import {Cadastrar} from './pages/Cadastrar';
 import { Editar } from './pages/Editar';
+import history from './services/history';
+import { AuthProvider } from './Context/AuthContext';
 
 function App() {
   return (
     <div>
-
-      <Router>
+      <AuthProvider>
+      <Router history={history}>
         <Switch>
         <Route exact path="/"  component={Login} />
           <Route exact path="/"  component={Dashboard} />
@@ -21,6 +23,7 @@ function App() {
           <Route exact path="/editar/:id" component={Editar} />
         </Switch>
       </Router>
+      </AuthProvider>
       
     </div>
   );
