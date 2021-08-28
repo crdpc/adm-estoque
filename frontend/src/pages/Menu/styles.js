@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const NavList = styled.ul`
     display: flex;
-    background-color: #ffb400;
+    background-color: #0d6efd;
     padding: 15px 5px;
     font-family: sans-serif;
     margin-bottom: 15px;
     a{
         text-decoration: none;
-        color: #000000;
+        color: #f9f9f9;
         margin: 0 8px;
     }
     a:hover{
@@ -18,16 +18,4 @@ export const NavList = styled.ul`
         font-size: 1.0rem;
         list-style: none;
     }
-`;
-
-export const ButtonInfo = styled.button`  
-    background-color: #0d6efd;
-    color: #f9f9f9;
-    font-family: sans-serif;
-    margin-bottom: 15px;
-    a:hover{
-        color: #d0d2db;
-    }
-    
-    
 `;
