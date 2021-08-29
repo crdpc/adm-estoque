@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react';import { useHistory } from 'react-router-dom';
 import { Context } from '../../Context/AuthContext';
+import "./styles.css";
+import { MainContainer, DrivePainel, FormDrive, InputDrive, ButtonDrive } from '../../pages/Login/styles';
+import { FaFacebookF, FaInstagram, FaTwitter }  from 'react-icons/fa';
 
 import api from '../../config/configApi';
 
@@ -55,23 +58,23 @@ export const Login = () => {
             });
     }
 
-    return (
-        <div>
-            <h1 className="text-primary">Login</h1>
-
+    return (        
+        <MainContainer>
+             <DrivePainel>Painel do Motorista</DrivePainel>                       
             {status.type === 'erro' ? <p>{status.messagem}</p> : ""}
             {status.type === 'success' ? <p>{status.messagem}</p> : ""}
-
-            <form onSubmit={loginSubmit}>
+            
+            <FormDrive onSubmit={loginSubmit}>
+                 
                 <label>Usuário: </label>
-                <input type="text" name="usuario" placeholder="Digite o usuário" onChange={valorInput} /><br /><br />
+                <InputDrive type="text" name="usuario" placeholder="Digite o usuário" onChange={valorInput} />
 
                 <label>Senha: </label>
-                <input type="password" name="senha" placeholder="Digite a senha" autoComplete="on" onChange={valorInput} /><br /><br />
+                <InputDrive type="password" name="senha" placeholder="Digite a senha" autoComplete="on" onChange={valorInput} /> 
 
-                <button type="submit">Acessar</button>
+                <ButtonDrive type="submit">Acessar</ButtonDrive>
 
-            </form>
-        </div>
+            </FormDrive>
+        </MainContainer>
     );
 }
