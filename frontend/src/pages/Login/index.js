@@ -1,12 +1,19 @@
 import React, { useState, useContext } from 'react';import { useHistory } from 'react-router-dom';
 import { Context } from '../../Context/AuthContext';
 import "./styles.css";
-import { MainContainer, DrivePainel, FormDrive, InputDrive, ButtonDrive } from '../../pages/Login/styles';
-import { FaFacebookF, FaInstagram, FaTwitter }  from 'react-icons/fa';
+import { MainContainer, DrivePainel, FormDrive, InputDrive, ButtonDrive, LoginWith, HorizontalRule, IconsContainer, ForgotPassword, Icon } from '../../pages/Login/styles';
+import { FaFacebookF, FaSteam, FaDiscord }  from 'react-icons/fa';
 
 import api from '../../config/configApi';
 
 export const Login = () => {
+
+    const FacebookBackground =
+    "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
+  const DiscordBackground =
+    "linear-gradient(to right, #0546A0 0%, #8292ea 40%, #0546A0 100%)";
+  const SteamBackground =
+    "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
 
     const history = useHistory();
 
@@ -72,9 +79,24 @@ export const Login = () => {
                 <label>Senha: </label>
                 <InputDrive type="password" name="senha" placeholder="Digite a senha" autoComplete="on" onChange={valorInput} /> 
 
-                <ButtonDrive type="submit">Acessar</ButtonDrive>
+                <ButtonDrive type="submit">Acessar</ButtonDrive>                
 
             </FormDrive>
+            <LoginWith> Ou acesse via</LoginWith>
+                <HorizontalRule />
+            <IconsContainer>
+                <Icon color={FacebookBackground}>
+                    <FaFacebookF />                    
+                </Icon>
+                <Icon color={DiscordBackground}>
+                    <FaDiscord />
+                </Icon>
+                <Icon color={SteamBackground}>
+                    <FaSteam />
+                </Icon>
+
+            </IconsContainer>
+            <ForgotPassword>Esqueci a senha</ForgotPassword>    
         </MainContainer>
     );
 }
